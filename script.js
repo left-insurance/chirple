@@ -18,14 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
             let response = await fetch("/api/generate-ad", { // Secure API call
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ product, description, audience })
+                body: JSON.stringify({ product: product, description: description, audience: audience })
             });
 
             let data = await response.json();
             adOutput.innerHTML = `<p><strong>Generated Ad:</strong> ${data.ad}</p>`;
         } catch (error) {
+            console.error("Error:", error);
             adOutput.innerHTML = "<p>Error generating ad. Please try again.</p>";
         }
     });
 });
- 
