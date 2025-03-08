@@ -25,9 +25,11 @@ export default async function handler(req, res) {
       max_tokens: 100,
     });
 
-    res.status(200).json({ ad: aiResponse.choices[0].message.content });
+    res.status(200).json({ ad: aiResponse.choices[0].message.content || "No response from AI." });
   } catch (error) {
     console.error("OpenAI API Error:", error);
-    res.status(500).json({ error: "Failed to generate ad" });
+
+    // Fix the error message format
+    res.status(500).json({ error: "Server error. Check logs for details." });
   }
 }
