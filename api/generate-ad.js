@@ -25,11 +25,13 @@ export default async function handler(req, res) {
       max_tokens: 100,
     });
 
-    res.status(200).json({ ad: aiResponse.choices[0].message.content || "No response from AI." });
+    const adText = aiResponse.choices?.[0]?.message?.content || "No response from AI.";
+
+    res.status(200).json({ ad: adText });
   } catch (error) {
     console.error("OpenAI API Error:", error);
 
-    // Fix the error message format
+    // Ensure error response is valid JSON
     res.status(500).json({ error: "Server error. Check logs for details." });
   }
 }
