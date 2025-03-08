@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chirple - Generate an Ad</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -8,21 +10,22 @@
     <h1>Ad Generator</h1>
     <p>Enter details to create an AI-powered ad.</p>
     
-    <form>
+    <form id="ad-form">
         <label for="product">Product Name:</label>
-        <input type="text" id="product" name="product"><br><br>
+        <input type="text" id="product" name="product" required><br><br>
 
         <label for="description">Description:</label>
-        <textarea id="description" name="description"></textarea><br><br>
+        <textarea id="description" name="description" required></textarea><br><br>
 
         <label for="audience">Target Audience:</label>
-        <input type="text" id="audience" name="audience"><br><br>
+        <input type="text" id="audience" name="audience" required><br><br>
 
         <button type="submit">Generate Ad</button>
     </form>
 
-    <div id="ad-output"></div> 
+    <!-- Output Section for Generated Ad -->
+    <div id="ad-output"></div>
 
-    <script src="script.js"></script> 
+    <script src="script.js"></script>
 </body>
 </html>
