@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector("form");
+    console.log("JavaScript is running!"); // Debugging log
+
+    const form = document.getElementById("ad-form");
     
     if (!form) {
         console.error("Form not found!");
@@ -7,7 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     form.addEventListener("submit", async function (event) {
-        event.preventDefault(); // Stops the page from refreshing
+        event.preventDefault();
+        console.log("Form submitted!");
 
         let product = document.getElementById("product").value.trim();
         let description = document.getElementById("description").value.trim();
@@ -36,4 +39,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-   
