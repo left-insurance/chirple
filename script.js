@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("form");
+    
     if (!form) {
         console.error("Form not found!");
         return;
     }
 
     form.addEventListener("submit", async function (event) {
-        event.preventDefault();
+        event.preventDefault(); // Stops the page from refreshing
 
         let product = document.getElementById("product").value.trim();
         let description = document.getElementById("description").value.trim();
@@ -35,3 +36,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+   
