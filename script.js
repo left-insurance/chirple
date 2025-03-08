@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log("JavaScript is running!"); // Debugging log
 
-    const form = document.getElementById("ad-form"); // Ensure form exists
+    let form = document.getElementById("ad-form"); // Get form element
 
     if (!form) {
         console.error("Form not found!");
@@ -39,5 +39,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-       
-          
