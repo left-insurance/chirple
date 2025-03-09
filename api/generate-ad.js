@@ -1,9 +1,3 @@
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -16,22 +10,20 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const aiResponse = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [
-        { role: "system", content: "You are an expert ad copywriter." },
-        { role: "user", content: `Write an ad for ${product}. Description: ${description}. Target audience: ${audience}.` },
-      ],
-      max_tokens: 100,
+    const apiKey = process.env.GEMINI_API_KEY;
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateText?key=${apiKey}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        prompt: { text: `Write an ad for ${product}. Description: ${description}. Target audience: ${audience}.` },
+      }),
     });
 
-    const adText = aiResponse.choices?.[0]?.message?.content || "No response from AI.";
-
-    res.status(200).json({ ad: adText });
+    const data = await response.json();
+    res.status(200).json({ ad: data.candidates[0].output });
   } catch (error) {
-    console.error("OpenAI API Error:", error);
-
-    // Ensure error response is valid JSON
-    res.status(500).json({ error: "Server error. Check logs for details." });
+    console.error("Gemini API Error:", error);
+    res.status(500).json({ error: error.message || "Server error" });
   }
 }
+ 
