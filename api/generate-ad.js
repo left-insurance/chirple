@@ -20,6 +20,14 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
+    
+    // Debugging: Log response
+    console.log("API Response:", data);
+    
+    if (!data.candidates || data.candidates.length === 0) {
+      throw new Error("Invalid response from AI API");
+    }
+
     res.status(200).json({ ad: data.candidates[0].output });
   } catch (error) {
     console.error("Gemini API Error:", error);
