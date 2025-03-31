@@ -1,41 +1,25 @@
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("JavaScript is running!"); // Debugging log
+document.querySelector("form").addEventListener("submit", async function (e) {
+    e.preventDefault(); // Prevent form refresh
 
-    let form = document.getElementById("ad-form"); // Get form element
+    const product = document.getElementById("product").value;
+    const description = document.getElementById("description").value;
+    const audience = document.getElementById("audience").value;
 
-    if (!form) {
-        console.error("Form not found!");
-        return;
+    try {
+        const response = await fetch("/api/generate-ad", {
+            method: "POST", // ✅ Must be POST
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ product, description, audience }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            document.getElementById("generated-ad").innerText = `Generated Ad: ${data.ad}`;
+        } else {
+            throw new Error(data.error || "Error generating ad.");
+        }
+    } catch (error) {
+        document.getElementById("generated-ad").innerText = `Error: ${error.message}`;
     }
-
-    form.addEventListener("submit", async function (event) {
-        event.preventDefault();
-        console.log("Form submitted!");
-
-        let product = document.getElementById("product").value.trim();
-        let description = document.getElementById("description").value.trim();
-        let audience = document.getElementById("audience").value.trim();
-
-        if (!product || !description || !audience) {
-            alert("Please fill in all fields.");
-            return;
-        }
-
-        let adOutput = document.getElementById("ad-output");
-        adOutput.innerHTML = "<p>Generating AI ad... Please wait.</p>";
-
-        try {
-            let response = await fetch("/api/generate-ad", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ product, description, audience })
-            });
-
-            let data = await response.json();
-            adOutput.innerHTML = `<p><strong>Generated Ad:</strong> ${data.ad || "Error generating ad."}</p>`;
-        } catch (error) {
-            console.error("Error:", error);
-            adOutput.innerHTML = "<p>Error generating ad. Please try again.</p>";
-        }
-    });
 });
