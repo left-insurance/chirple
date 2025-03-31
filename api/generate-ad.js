@@ -4,8 +4,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log("Request received:", req.body); // Debugging log
-
     const { product, description, audience } = req.body;
     if (!product || !description || !audience) {
       return res.status(400).json({ error: "Missing required fields" });
@@ -16,10 +14,8 @@ export default async function handler(req, res) {
       throw new Error("API key is missing!");
     }
 
-    console.log("Sending request to Gemini API...");
-
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateText?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateText?key=${apiKey}`, // ✅ Correct endpoint
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -34,7 +30,6 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-    console.log("API Response Data:", data);
 
     if (!data.candidates || data.candidates.length === 0) {
       throw new Error("Invalid response from AI API");
