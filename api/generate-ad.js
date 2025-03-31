@@ -11,11 +11,11 @@ export default async function handler(req, res) {
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      throw new Error("API key is missing!");
+      throw new Error("API key is missing! Check Vercel environment variables.");
     }
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateText?key=${apiKey}`, // ✅ Correct endpoint
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateText?key=${apiKey}`, // ✅ Fixed API URL
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
