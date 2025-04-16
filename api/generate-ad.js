@@ -14,28 +14,38 @@ export default async function handler(req, res) {
       throw new Error("API key is missing! Check Vercel environment variables.");
     }
 
+    const prompt = `Write an ad for ${product}. Description: ${description}. Target audience: ${audience}.`;
+
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, // ✅ Fixed API URL
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          prompt: { text: `Write an ad for ${product}. Description: ${description}. Target audience: ${audience}.` },
+          contents: [
+            {
+              parts: [{ text: prompt }],
+            },
+          ],
         }),
       }
     );
 
     if (!response.ok) {
-      throw new Error(`Gemini API Error: ${response.status} ${response.statusText}`);
+      const errText = await response.text();
+      throw new Error(`Gemini API Error: ${response.status} ${errText}`);
     }
 
     const data = await response.json();
 
-    if (!data.candidates || data.candidates.length === 0) {
-      throw new Error("Invalid response from AI API");
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!text) {
+      throw new Error("Invalid response from Gemini API");
     }
 
-    res.status(200).json({ ad: data.candidates[0].output });
+    res.status(200).json({ ad: text });
   } catch (error) {
     console.error("Gemini API Error:", error);
     res.status(500).json({ error: error.message || "Server error" });
