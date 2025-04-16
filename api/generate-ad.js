@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     }
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateText?key=${apiKey}`, // ✅ Fixed API URL
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, // ✅ Fixed API URL
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
