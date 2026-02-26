@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const ai = new GoogleGenerativeAI(process.env.AIzaSyBCFuzS7cKWh-uLlz4zHCsP5xCR0e3i_wo);
 
 export default async function handler(req, res) {
   try {
