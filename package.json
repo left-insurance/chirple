@@ -2,14 +2,14 @@
   "name": "chirple",
   "version": "1.0.0",
   "description": "AI-powered ad generator",
-  "main": "index.js",
+
+  "type": "module",
+
+  "engines": {
+    "node": "18.x"
+  },
+
   "dependencies": {
-    "openai": "^4.0.0",
-    "@google/generative-ai": "^1.0.0"
-  },
-  "scripts": {
-    "start": "node server.js"
-  },
-  "author": "Your Name",
-  "license": "MIT"
+    "@google/generative-ai": "^0.21.0"
+  }
 }
