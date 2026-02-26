@@ -1,4 +1,6 @@
 async function generateAd() {
+  console.log("Button clicked");   // 👈 add this
+
   const product = document.getElementById("product").value;
   const description = document.getElementById("description").value;
   const audience = document.getElementById("audience").value;
