@@ -9,14 +9,31 @@ document.body.classList.toggle("light");
 });
 
 
-document.getElementById("generate").addEventListener("click", () => {
+document.getElementById("generate").addEventListener("click", async () => {
 
 const product = document.getElementById("product").value;
+const description = document.getElementById("description").value;
+const audience = document.getElementById("audience").value;
 
-output.innerText = "Ad for " + product + " coming soon...";
+output.innerText = "Generating...";
 
+const response = await fetch("/api/generate", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({
+product,
+description,
+audience
+})
 });
 
+const data = await response.json();
+
+output.innerText = data.text;
+
+});
 
 posterBtn.addEventListener("click", () => {
 
