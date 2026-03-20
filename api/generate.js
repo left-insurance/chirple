@@ -17,6 +17,7 @@ Audience: ${audience}
 Make it catchy and engaging.`;
 
 const response = await fetch("https://YOUR-RAPIDAPI-ENDPOINT", {
+console.log(await response.text());
 method: "POST",
 headers: {
 "Content-Type": "application/json",
