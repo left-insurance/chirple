@@ -25,8 +25,7 @@ const description = document.getElementById("description").value;
 
 const prompt = product + " advertising poster " + description;
 
-const imageUrl =
-"https://image.pollinations.ai/prompt/" +
+const imageUrl = "https://picsum.photos/512"; +
 encodeURIComponent(prompt) +
 "?width=512&height=512&nologo=true";
 
